@@ -18,16 +18,27 @@ public class JpaMain {
 
         try {
 
+            //팀 저장
+            Team team = new Team();
+            team.setName("TeamA");
+            em.persist(team);
+            //회원 저장
+            Member member = new Member();
+            member.setUsername("member1");
+            member.setTeam(team); //단방향 연관관계 설정, 참조 저장
+            em.persist(member);
+
+
 //            Member findMember = em.find(Member.class, 1L);
 
-            List<Member> result = em.createQuery("select m from Member as m", Member.class)
-                    .setFirstResult(0)
-                    .setMaxResults(1)
-                    .getResultList();
-
-            for (Member member : result) {
-                System.out.println("member.name = "+member.getName());
-            }
+//            List<Member> result = em.createQuery("select m from Member as m", Member.class)
+//                    .setFirstResult(0)
+//                    .setMaxResults(1)
+//                    .getResultList();
+//
+//            for (Member member : result) {
+//                System.out.println("member.name = "+member.getName());
+//            }
 
 
             //업데이트임 따로 persist 안해도됌, 트랜잭션에 의해 commit 전에 업데이트 쿼리가 나감
