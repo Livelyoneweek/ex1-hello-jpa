@@ -1,5 +1,7 @@
 package hellojpa;
 
+import hellojpa.domain.Movie;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
@@ -17,16 +19,27 @@ public class JpaMain {
         tx.begin();
 
         try {
+            Movie movie = new Movie();
+            movie.setDirctor("aaa");
+            movie.setActor("bbb");
+            movie.setName("바람과함께");
+            movie.setPrice(10000);
+            em.persist(movie);
 
-            //팀 저장
-            Team team = new Team();
-            team.setName("TeamA");
-            em.persist(team);
-            //회원 저장
-            Member member = new Member();
-            member.setUsername("member1");
-            member.setTeam(team); //단방향 연관관계 설정, 참조 저장
-            em.persist(member);
+            em.flush();
+            em.clear();
+
+            Movie findMovie = em.find(Movie.class, movie.getId());
+
+//            //팀 저장
+//            Team team = new Team();
+//            team.setName("TeamA");
+//            em.persist(team);
+//            //회원 저장
+//            Member member = new Member();
+//            member.setUsername("member1");
+//            member.setTeam(team); //단방향 연관관계 설정, 참조 저장
+//            em.persist(member);
 
 
 //            Member findMember = em.find(Member.class, 1L);
