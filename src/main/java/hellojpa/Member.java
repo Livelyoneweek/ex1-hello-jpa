@@ -1,21 +1,29 @@
 package hellojpa;
 
+import hellojpa.domain.Address;
 import hellojpa.domain.BaseEntity;
+import hellojpa.domain.Period;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
 public class Member extends BaseEntity {
 
     @Id @GeneratedValue
+    @Column(name = "MEMBER_ID")
     private Long id;
     @Column(name = "USERNAME")
     private String username;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "TEAM_ID")
-    private Team team;
+    //기간 Period
+    @Embedded
+    private Period workPeriod;
+
+    //주소 Address
+    @Embedded
+    private Address homeAddress;
 
     public Long getId() {
         return id;
@@ -23,7 +31,6 @@ public class Member extends BaseEntity {
 
     public void setId(Long id) {
         this.id = id;
-
     }
 
     public String getUsername() {
@@ -34,11 +41,19 @@ public class Member extends BaseEntity {
         this.username = username;
     }
 
-    public Team getTeam() {
-        return team;
+    public Period getWorkPeriod() {
+        return workPeriod;
     }
 
-    public void setTeam(Team team) {
-        this.team = team;
+    public void setWorkPeriod(Period workPeriod) {
+        this.workPeriod = workPeriod;
+    }
+
+    public Address getHomeAddress() {
+        return homeAddress;
+    }
+
+    public void setHomeAddress(Address homeAddress) {
+        this.homeAddress = homeAddress;
     }
 }
