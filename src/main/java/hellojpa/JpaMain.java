@@ -1,11 +1,10 @@
 package hellojpa;
 
+import hellojpa.domain.Child;
 import hellojpa.domain.Movie;
+import hellojpa.domain.Parent;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
-import javax.persistence.Persistence;
+import javax.persistence.*;
 import java.util.List;
 
 public class JpaMain {
@@ -19,17 +18,69 @@ public class JpaMain {
         tx.begin();
 
         try {
-            Movie movie = new Movie();
-            movie.setDirctor("aaa");
-            movie.setActor("bbb");
-            movie.setName("바람과함께");
-            movie.setPrice(10000);
-            em.persist(movie);
+            Child child1 = new Child();
+            Child child2 = new Child();
+
+            Parent parent = new Parent();
+            parent.addChild(child1);
+            parent.addChild(child2);
+
+            em.persist(parent);
 
             em.flush();
             em.clear();
 
-            Movie findMovie = em.find(Movie.class, movie.getId());
+            Parent findParent = em.find(Parent.class, parent.getId());
+            findParent.getChildList().remove(0);
+
+
+
+
+//            Team team = new Team();
+//            team.setName("teamA");
+//            em.persist(team);
+//
+//            Team team2 = new Team();
+//            team.setName("team2");
+//            em.persist(team2);
+//
+//            Member member1 = new Member();
+//            member1.setUsername("member1");
+//            member1.setTeam(team);
+//            em.persist(member1);
+//
+//            Member member2 = new Member();
+//            member2.setUsername("member2");
+//            member2.setTeam(team2);
+//            em.persist(member2);
+//
+//            em.flush();
+//            em.clear();
+//
+//
+//            List<Member> members = em.createQuery("select m from Member m join fetch m.team", Member.class).getResultList();
+
+//            System.out.println("~~~~~~~~~~~~~~~~~~");
+//            m.getTeam().getName(); // 이 순간 초기화
+//            System.out.println("~~~~~~~~~~~~~~~~~~");
+
+            //커밋해줘야 디비 반영
+            tx.commit();
+
+//            Movie movie = new Movie();
+//            movie.setDirctor("aaa");
+//            movie.setActor("bbb");
+//            movie.setName("바람과함께");
+//            movie.setPrice(10000);
+//            em.persist(movie);
+//
+//            em.flush();
+//            em.clear();
+//
+//            Movie findMovie = em.find(Movie.class, movie.getId());
+
+
+
 
 //            //팀 저장
 //            Team team = new Team();
@@ -66,8 +117,7 @@ public class JpaMain {
 //            member.setName("HelloB");
 //            em.persist(member);
 
-            //커밋해줘야 디비 반영
-            tx.commit();
+
         } catch (Exception e){
             tx.rollback();
         } finally {
