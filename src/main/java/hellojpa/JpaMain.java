@@ -20,16 +20,16 @@ public class JpaMain {
 
         try {
 
-            Address address = new Address("city", "street", "zipCode");
-
-            Member member1 = new Member();
-            member1.setUsername("hello");
-            member1.setHomeAddress(address);
-            em.persist(member1);
-
-            Address newAddress = new Address("newCity", address.getStreet(), address.getZipCode());
-            member1.setHomeAddress(newAddress); //값 바꿀려면 통쨰로 바꿔라
-            // 값, 객체 타입은 그냥 불변으로 만들 것!!!
+//            Address address = new Address("city", "street", "zipCode");
+//
+//            Member member1 = new Member();
+//            member1.setUsername("hello");
+//            member1.setHomeAddress(address);
+//            em.persist(member1);
+//
+//            Address newAddress = new Address("newCity", address.getStreet(), address.getZipCode());
+//            member1.setHomeAddress(newAddress); //값 바꿀려면 통쨰로 바꿔라
+//            // 값, 객체 타입은 그냥 불변으로 만들 것!!!
 
             //커밋해줘야 디비 반영
             tx.commit();
